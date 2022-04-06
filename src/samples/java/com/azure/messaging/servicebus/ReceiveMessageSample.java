@@ -24,8 +24,7 @@ public class ReceiveMessageSample {
         // 1. Going to your Service Bus namespace in Azure Portal.
         // 2. Go to "Shared access policies"
         // 3. Copy the connection string for the "RootManageSharedAccessKey" policy.
-        String connectionString = "Endpoint={fully-qualified-namespace};SharedAccessKeyName={policy-name};"
-            + "SharedAccessKey={key}";
+        String connectionString = "Endpoint=sb://cor-d-zeaus-np-npportal-bus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=iSEL6bx/1nPpHEhzwg8rXFV62HWStdRPEzgqCI+Kk2E=";
 
         // Create a receiver.
         // "<<fully-qualified-namespace>>" will look similar to "{your-namespace}.servicebus.windows.net"
@@ -36,7 +35,7 @@ public class ReceiveMessageSample {
             .connectionString(connectionString)
             .receiver()
             .maxAutoLockRenewDuration(Duration.ofMinutes(1))
-            .queueName("<<queue-name>>")
+            .queueName("npportaldevqueue")
             .buildClient();
 
         // Try to receive a set of messages from Service Bus 10 times. A batch of messages are returned when 5 messages

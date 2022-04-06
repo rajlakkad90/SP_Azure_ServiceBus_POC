@@ -14,8 +14,8 @@ import java.util.stream.IntStream;
  * Sample demonstrates how to send an {@link ServiceBusMessage} to an Azure Service Bus queue.
  */
 public class SendMessageAsyncSample {
-    String connectionString = System.getenv("Endpoint=sb://cor-d-zeaus-np-npportal-bus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=iSEL6bx/1nPpHEhzwg8rXFV62HWStdRPEzgqCI+Kk2E=");
-    String queueName = System.getenv("npportaldevqueue");
+    String connectionString = "Endpoint=sb://cor-d-zeaus-np-npportal-bus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=iSEL6bx/1nPpHEhzwg8rXFV62HWStdRPEzgqCI+Kk2E=";
+    String queueName = "npportaldevqueue";
 
     /**
      * Main method to invoke this demo on how to send an {@link ServiceBusMessageBatch} to an Azure Service Bus.
@@ -56,15 +56,18 @@ public class SendMessageAsyncSample {
             .buildClient();
 
         // Create a message to send.
-        final ServiceBusMessageBatch messageBatch = sender.createMessageBatch();
+        /*final ServiceBusMessageBatch messageBatch = sender.createMessageBatch();
         IntStream.range(0, 10)
             .mapToObj(index -> new ServiceBusMessage(BinaryData.fromString("Hello world! " + index)))
-            .forEach(message -> messageBatch.tryAddMessage(message));
+            .forEach(message -> messageBatch.tryAddMessage(message));*/
+        ServiceBusMessage message = new ServiceBusMessage("Hello world")
+                .setSessionId("greetings");
 
+        sender.sendMessage(message);
         // Send that message. This call returns a Mono<Void>, which we subscribe to. It completes successfully when the
         // event has been delivered to the Service queue or topic. It completes with an error if an exception occurred
         // while sending the message.
-        sender.sendMessages(messageBatch);
+        //sender.sendMessages(messageBatch);
 
         // Close the sender.
         sender.close();
